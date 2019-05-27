@@ -1,0 +1,65 @@
+.signatures_section{
+  width: 100%;
+  height: 90%;
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.signature_container{
+box-sizing: border-box;
+  width: 30%;
+  height: 30%;
+  padding: 0.5%;
+  display: inline-block;
+  margin-left: 2.5%;
+  margin-top: 1%;
+}
+
+.signature_button{
+  width: 40%;
+  height: 20%;
+  margin-top: 0%;
+}
+
+.signature_description{
+  width: 75%;
+  height: 30%;
+  margin-left: 5%;
+  word-wrap: break-word;
+  overflow-y: auto;
+  font-family: "Courgette";
+}
+
+.signature_image{
+  z-index:2;
+  width: 40%;
+  height:60%;
+  /*background-color: yellow;*/
+  float:left;
+  position: relative;
+  top:0%;
+  margin: 0;
+  padding: 0;
+}
+
+.signature_image img{
+  border-radius: 50%;
+  width: 78%;
+  height: 99%;
+
+}
+
+.signature_info{
+  background-color: white;
+  z-index: 1;
+  width: 75%;
+  height: 80%;
+  position: relative;
+  top: -40%;
+  right: 5%;
+  float:right;
+  margin: 0;
+  padding: 0;
+  box-shadow: 4px 4px 5px black;
+}
