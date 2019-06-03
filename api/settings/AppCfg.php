@@ -14,6 +14,7 @@ class AppCfg {
     const GET_SIGNATURE_PARTS_ACTION = "GET_SIGNATURE_PARTS";
     const GET_ALTER_SIGNATURES_ACTION = "GET_ALTER_SIGNATURES";
     const DELETE_SIGNATURE_ACTION = "DELETE_SIGNATURE";
+    CONST UPDATE_PASSWORD_ACTION = "UPDATE_PASSWORD";
 
     const NULL_PARAMETERS_FOUND = "La operación no puede ser completada con éxito debido a problemas con los parámetros enviados.";
     const UNRECOGNIZED_ACTION = "La acción que ha solicitado no se encuentra disponible.";

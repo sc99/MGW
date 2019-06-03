@@ -236,6 +236,7 @@
         <ul class="header_menu">
           <li class="header_menuItem" onclick="logOut()">Salir</li>
           <li class="header_menuItem" style="cursor:pointer;"><a href="gallery.php">Signatures</a></li>
+          <li class="header_menuItem" style="cursor:pointer;"><a href="settings.php">Configuración</a></li>
         </ul>
     </header>
     <section class="home_container">
