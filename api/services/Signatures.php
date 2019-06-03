@@ -42,9 +42,12 @@ if(!is_null($action)){
       }
     break;
     case AppCfg::ADD_SIGNATURE_ACTION:
-      $objectGuitar = isset($_POST['guitar']) ? $_POST['guitar'] : null;
+      $objectGuitar = isset($_POST['signature']) ? json_decode($_POST['signature'],true) : null;
       if(!is_null($objectGuitar)){
         $guitarModel = new GuitarModel();
+        echo $guitarModel->addGuitar($objectGuitar['model'],$objectGuitar['kaoss'],$objectGuitar['sustainer'],$objectGuitar['price'],
+        $objectGuitar['body'],$objectGuitar['freet'],$objectGuitar['bridge'],$objectGuitar['picks'],
+        $objectGuitar['strings'],$objectGuitar['effect'],$objectGuitar['wood']);
       }else
         echo AppCfg::NULL_PARAMETERS_FOUND;
     break;

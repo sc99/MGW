@@ -135,6 +135,36 @@ class GuitarModel  {
     ));
   }
 
+  public function addGuitar($model,$kaoss,$sustainer,$price,$body,$freet,$bridge,$picks,$strings,$effect,$wood){
+    $dataBase = new DataBase();
+    $jsonResponse = null;
+
+    try{
+      if(!is_null($dataBase->getError()))
+        throw new DataBaseException($dataBase->error);
+      else{
+        $dataBase->query("call sp_add_guitar(:model,:kaoss,:sustainer,:price,:body,:freet,:bridge,:picks,:strings,:effect,:wood)");
+        $dataBase->bind(":model",$model);
+        $dataBase->bind(":kaoss",$kaoss);
+        $dataBase->bind(":sustainer",$sustainer);
+        $dataBase->bind(":price",$price);
+        $dataBase->bind(":body",$body);
+        $dataBase->bind(":freet",$freet);
+        $dataBase->bind(":bridge",$bridge);
+        $dataBase->bind(":picks",$picks);
+        $dataBase->bind(":strings",$strings);
+        $dataBase->bind(":effect",$effect);
+        $dataBase->bind(":wood",$wood);
+        $row = $dataBase->single();
+        $jsonResponse = json_encode(array("result"=>$row['ERROR'],"message"=>$row['MESSAGE']));
+      }
+    }catch(DataBaseException $e){
+      $jsonResponse = json_encode(array("result" => 0, "message" =>$e->getMessage()));
+    }
+    $dataBase = null;
+    return $jsonResponse;
+  }
+
   public function deleteGuitar($signatureId){
     $dataBase = new DataBase();
     $jsonResponse = null;

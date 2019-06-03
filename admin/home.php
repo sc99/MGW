@@ -144,8 +144,89 @@
           document.getElementById("wood").innerHTML = html;
         }
 
-        function addSignature(){
+        function getSignatureObject(){
+          var object = {
+            "body":document.getElementById("body").value,
+            "price":document.getElementById("price").value,
+            "effect":document.getElementById("effect").value,
+            "freet":document.getElementById("freetboard").value,
+            "kaoss":document.getElementById("kaoss").value,
+            "bridge":document.getElementById("bridge").value,
+            "sustainer":document.getElementById("sustainer").value,
+            "picks":document.getElementById("pickups").value,
+            "wood":document.getElementById("wood").value,
+            "strings":document.getElementById("strings").value,
+            "model":document.getElementById("model").value,
 
+          };
+          return object;
+        }
+
+        function isValidSignatureObject(object){
+          if(!object.body >0)
+            return "Cuerpo";
+          if(!object.effect >0)
+            return "Efecto";
+          if(!object.freet > 0)
+            return "Mástil";
+          if(!object.bridge > 0)
+            return "Puente";
+          if(!object.picks > 0)
+            return "Pastillas";
+          if(!object.wood >0)
+            return "Madera";
+          if(!object.strings >0)
+            return "Cuerdas";
+          if(object.model == '' || object.model == ' ')
+            return "Modelo";
+          if(object.price == 0)
+            return "Precio";
+          return null;
+        }
+
+        function clearFields(){
+          document.getElementById("body").value = 0;
+          document.getElementById("effect").value = 0;
+          document.getElementById("freetboard").value = 0;
+          document.getElementById("kaoss").value = 0;
+          document.getElementById("bridge").value = 0;
+          document.getElementById("sustainer").value = 0;
+          document.getElementById("pickups").value = 0;
+          document.getElementById("wood").value = 0;
+          document.getElementById("strings").value = 0;
+          document.getElementById("model").value = '';
+          document.getElementById("price").value = 0;
+        }
+
+        function submitSignature(signature){
+          var ajax = new XMLHttpRequest();
+          var params = "action="+ACTIONS.ADDSIGNATURE+"&signature="+JSON.stringify(signature);
+          var response = null;
+
+          ajax.open("POST","/CG/api/services/Signatures.php",true);
+          ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+          ajax.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+              console.log(ajax.responseText);
+              response = JSON.parse(ajax.responseText);
+              if(response.result == 0){//successful register
+                alert(response.message);
+                clearFields();
+              }
+            }
+          }
+          ajax.send(params);
+        }
+
+        function addSignature(){
+            var signatureObject = getSignatureObject();
+            console.log(signatureObject);
+            var invalidPart = isValidSignatureObject(signatureObject);
+            if(invalidPart == null){ //No invalid part
+              submitSignature(signatureObject);
+            }else {
+              alert("Selección no válida de la parte: "+invalidPart);
+            }
         }
     </script>
   </head>
@@ -209,10 +290,10 @@
             <input type="text" id="model" name="model" placeholder="Escribe el nombre de la guitarra">
           </div>
 
-          <!--<div class="home_form_field" style="width:70%;height:17%;">
-            <label  for="image">Imagen</label>
-            <input type="file" id="image" name="image" style="width:100%;">
-          </div> -->
+          <div class="home_form_field" style="width:70%;height:17%;">
+            <label  for="price">Precio</label>
+            <input type="number" id="price" name="price" style="width:100%;" min=0 max=10000000>
+          </div>
           <button class="home_form_button" type="button" onclick="addSignature();" >Agregar</button>
         </div>
     </section>
