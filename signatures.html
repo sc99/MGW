@@ -7,9 +7,55 @@
     <link rel="stylesheet" href="css/signatures.css">
     <link rel="stylesheet" href="css/modalsig.css">
     <link rel="stylesheet" href="css/modalpago.css">
+    <script type="text/javascript" src="js/Actions.js"></script>
     <script type="text/javascript">
+
+        function renderSignatures(signatures){
+          var html = document.getElementsByClassName('signatures_section')[0].innerHTML;
+          var length = Object.keys(signatures).length;
+          var signature = null;
+          for(var i = 0; i < length; i++){
+            signature = signatures[i];
+            html +='<div class="signature_container">';
+            html += "<input type='hidden' value='"+JSON.stringify(signature)+"'>"
+            html += '<div class="signature_image">';
+            html += '<img src="imgs/mockupGuitar.jpg" alt="Guitar Signature Model"></div>';
+            html += '<div class="signature_info">';
+            html += '<center><h2>Signature name</h2><hr style="width:20%;">';
+            html += '<div class="signature_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>';
+            html += '<br><button type="button" class="signature_button" onClick="showSignatureModal(this)" >Ver a detalle</button>';
+            html += '</center></div></div>';
+          }
+          document.getElementByClassName('signatures_section').innerHTML = html;
+
+        }
+
         function getSignatures(){
-          
+          var ajax = new XMLHttpRequest();
+          var params = "action="+ACTIONS.GETSIGNATURES;
+          var response = null;
+
+          ajax.open("POST","/CG/api/services/Signatures.php",true);
+          ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+          ajax.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+              console.log(ajax.responseText);
+              response = JSON.parse(ajax.responseText);
+              switch(response.result){
+                case 1:
+                  renderSignatures(response.guitars);
+                break;
+                case 0:
+                  alert(response.message);
+                break;
+                case -1:
+                  document.getElementById("signatureMessage").innerHTML = response.message;
+                  document.getElementById("signatureMessage").classList.remove("signature_message--hidden");
+                break;
+              }
+            }
+          }
+          ajax.send(params);
         }
     </script>
   </head>
@@ -22,7 +68,8 @@
     </header>
     <section class="signatures_section">
 
-      <div class="signature_container">
+  <span id="signatureMessage" class="signature_message signature_message--hidden"></span>
+      <!--<div class="signature_container">
         <div class="signature_image">
           <img src="imgs/mockupGuitar.jpg" alt="Guitar Signature Model">
         </div>
@@ -35,126 +82,7 @@
               <button type="button" class="signature_button" onClick="showSignatureModal(this)" >Ver a detalle</button>
           </center>
         </div>
-      </div>
-
-      <div class="signature_container">
-        <div class="signature_image">
-          <img src="imgs/mockupGuitar.jpg" alt="Guitar Signature Model">
-        </div>
-        <div class="signature_info">
-            <center>
-              <h2>Signature name</h2>
-              <hr style="width:20%;">
-              <div class="signature_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-              <br>
-              <button type="button" class="signature_button">Ver a detalle</button>
-          </center>
-        </div>
-      </div>
-
-      <div class="signature_container">
-        <div class="signature_image">
-          <img src="imgs/mockupGuitar.jpg" alt="Guitar Signature Model">
-        </div>
-        <div class="signature_info">
-            <center>
-              <h2>Signature name</h2>
-              <hr style="width:20%;">
-              <div class="signature_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-              <br>
-              <button type="button" class="signature_button">Ver a detalle</button>
-          </center>
-        </div>
-      </div>
-
-      <div class="signature_container">
-        <div class="signature_image">
-          <img src="imgs/mockupGuitar.jpg" alt="Guitar Signature Model">
-        </div>
-        <div class="signature_info">
-            <center>
-              <h2>Signature name</h2>
-              <hr style="width:20%;">
-              <div class="signature_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-              <br>
-              <button type="button" class="signature_button">Ver a detalle</button>
-          </center>
-        </div>
-      </div>
-
-      <div class="signature_container">
-        <div class="signature_image">
-          <img src="imgs/mockupGuitar.jpg" alt="Guitar Signature Model">
-        </div>
-        <div class="signature_info">
-            <center>
-              <h2>Signature name</h2>
-              <hr style="width:20%;">
-              <div class="signature_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-              <br>
-              <button type="button" class="signature_button">Ver a detalle</button>
-          </center>
-        </div>
-      </div>
-      <div class="signature_container">
-        <div class="signature_image">
-          <img src="imgs/mockupGuitar.jpg" alt="Guitar Signature Model">
-        </div>
-        <div class="signature_info">
-            <center>
-              <h2>Signature name</h2>
-              <hr style="width:20%;">
-              <div class="signature_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-              <br>
-              <button type="button" class="signature_button">Ver a detalle</button>
-          </center>
-        </div>
-      </div>
-
-      <div class="signature_container">
-        <div class="signature_image">
-          <img src="imgs/mockupGuitar.jpg" alt="Guitar Signature Model">
-        </div>
-        <div class="signature_info">
-            <center>
-              <h2>Signature name</h2>
-              <hr style="width:20%;">
-              <div class="signature_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-              <br>
-              <button type="button" class="signature_button">Ver a detalle</button>
-          </center>
-        </div>
-      </div>
-
-      <div class="signature_container">
-        <div class="signature_image">
-          <img src="imgs/mockupGuitar.jpg" alt="Guitar Signature Model">
-        </div>
-        <div class="signature_info">
-            <center>
-              <h2>Signature name</h2>
-              <hr style="width:20%;">
-              <div class="signature_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-              <br>
-              <button type="button" class="signature_button">Ver a detalle</button>
-          </center>
-        </div>
-      </div>
-
-      <div class="signature_container">
-        <div class="signature_image">
-          <img src="imgs/mockupGuitar.jpg" alt="Guitar Signature Model">
-        </div>
-        <div class="signature_info">
-            <center>
-              <h2>Signature name</h2>
-              <hr style="width:20%;">
-              <div class="signature_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-              <br>
-              <button type="button" class="signature_button">Ver a detalle</button>
-          </center>
-        </div>
-      </div>
+      </div> -->
 
     </section>
     <div id="modalSignature" class="modal">

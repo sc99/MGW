@@ -4,6 +4,7 @@ foreach (glob("../utils/catalogues/*.php") as $filename)
     require_once($filename);
 }
 require_once("../settings/AppCfg.php");
+require_once("../utils/DataBase.php");
 
 class GuitarModel{
   private $id;
@@ -20,28 +21,32 @@ class GuitarModel{
   private $wood;
   private $url;
 
-  public function __construct(){}
+  public function __construct(){
 
-  public function __construct($id,$model,$price,$kaoss,$sustainer,$body,$freetboard,$bridge,$pickups,$strings,$effect,$wood,$url){
-    $this->id = $id;
-    $this->model = $model;
-    $this->price= $price;
-    $this->kaoss = $kaoss;
-    $this->sustainer = $sustainer;
-    $this->body = $body;
-    $this->freetboard = $freetboard;
-    $this->bridge = $bridge;
-    $this->pickups = $pickups;
-    $this->strings = $strings;
-    $this->effect = $effect;
-    $this->wood = $wood;
-    $this->url = $url;
+  }
+
+  public static function basedOnParams($id,$model,$price,$kaoss,$sustainer,$body,$freetboard,$bridge,$pickups,$strings,$effect,$wood,$url){
+    $instance = new self();
+    $instance->id = $id;
+    $instance->model = $model;
+    $instance->price= $price;
+    $instance->kaoss = $kaoss;
+    $instance->sustainer = $sustainer;
+    $instance->body = $body;
+    $instance->freetboard = $freetboard;
+    $instance->bridge = $bridge;
+    $instance->pickups = $pickups;
+    $instance->strings = $strings;
+    $instance->effect = $effect;
+    $instance->wood = $wood;
+    $instance->url = $url;
+    return $instance;
   }
 
   public function setId($id){$this->id = $id;}
   public function setModel($model){$this->model = $model;}
   public function setPrice($price){$this->price = $price;}
-  public function setKaoss($kaoss){$this-> = $kaoss;}
+  public function setKaoss($kaoss){$this->kaoss = $kaoss;}
   public function setSustainer($sustainer){$this->sustainer = $sustainer;}
   public function setBody($body){$this->body = $body;}
   public function setFreetboard($freetboard){$this->freetboard = $freetboard;}
@@ -75,9 +80,9 @@ class GuitarModel{
       else{
         $dataBase->query("select * from vw_guitars");
         $guitars = $dataBase->resultSet();
-        if($guitars->count() > 0)
+        if(sizeof($guitars) > 0)
           foreach($guitars as $guitar){
-              $guitar = new GuitarModel(
+              $guitar = self::basedOnParams(
                 $guitar['ID'],
                 $guitar['MODEL'],
                 $guitar['PRICE'],
@@ -131,7 +136,7 @@ class GuitarModel{
 }
 
 class InvalidGuitarPartException extends Exception{
-  private $message;
+  protected $message;
 
   public function __construct($message){
     $this->message = $message;

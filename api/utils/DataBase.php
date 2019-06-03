@@ -63,7 +63,7 @@ class DataBase{
 }
 
 class DataBaseException extends Exception{
-  private $message;
+  protected $message;
 
   public function __construct($message){
     $this->message = $message;
