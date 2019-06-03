@@ -24,7 +24,6 @@
           ajax.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
               console.log(ajax.responseText);
-              alert("");
               response = JSON.parse(ajax.responseText);
               if(response.result > 0){//successful login
                 window.location = "login.html";
@@ -34,17 +33,128 @@
           ajax.send(params);
         }
 
+        function getSignatureParts(){
+          var ajax = new XMLHttpRequest();
+          var params = "action="+ACTIONS.GETPARTS;
+          var response = null;
+
+          ajax.open("POST","/CG/api/services/Signatures.php",true);
+          ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+          ajax.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+              console.log(ajax.responseText);
+              response = JSON.parse(ajax.responseText);
+              if(response.result == 1){//successful login
+                setSignatureParts(response);
+              }
+            }
+          }
+          ajax.send(params);
+        }
+
         function showSignaturesPreview(){
           alert("TODO Show signatures preview");
         }
+
+        function setSignatureParts(jsonParts){
+          setBodies(jsonParts.bodies);
+          setBridges(jsonParts.bridges);
+          setPicks(jsonParts.picks);
+          setEffects(jsonParts.effects);
+          setStrings(jsonParts.strings);
+          setFreets(jsonParts.freet);
+          setWoods(jsonParts.woods);
+
+        }
+
+        function setBodies(bodies){
+          var length = Object.keys(bodies).length;
+          var row = null;
+          var html = document.getElementById("body").innerHTML;
+          for(var i = 0; i < length ; i++){
+            row = bodies[i];
+            html += "<option value="+row.body_id+">"+row.body_name+"</option>";
+          }
+          document.getElementById("body").innerHTML = html;
+        }
+
+        function setBridges(bridges){
+          var length = Object.keys(bridges).length;
+          var row = null;
+          var html = document.getElementById("bridge").innerHTML;
+          for(var i = 0; i < length ; i++){
+            row = bridges[i];
+            html +="<option value="+row.bridge_id+" >"+row.bridge_name+" </option>";
+          }
+          document.getElementById("bridge").innerHTML= html;
+        }
+
+        function setPicks(picks){
+          var length = Object.keys(picks).length;
+          var row = null;
+          var html = document.getElementById("pickups").innerHTML;
+          for(var i = 0; i < length ; i++){
+            row = picks[i];
+            html +="<option value="+row.pickup_id+" >"+row.pickup_name+" </option>";
+          }
+          document.getElementById("pickups").innerHTML= html;
+        }
+
+        function setEffects(effects){
+          var length = Object.keys(effects).length;
+          var row = null;
+          var html = document.getElementById("effect").innerHTML;
+          for(var i = 0; i < length ; i++){
+            row = effects[i];
+            html +="<option value="+row.effect_id+" >"+row.effect_name+" </option>";
+          }
+          document.getElementById("effect").innerHTML= html;
+        }
+
+        function setStrings(strings){
+          var length = Object.keys(strings).length;
+          var row = null;
+          var html = document.getElementById("strings").innerHTML;
+          for(var i = 0; i < length ; i++){
+            row = strings[i];
+            html +="<option value="+row.string_id+" >Cuerdas: "+row.string_quantity+",Calibre: "+row.string_gauge+" </option>";
+          }
+          document.getElementById("strings").innerHTML= html;
+        }
+
+        function setFreets(freets){
+          var length = Object.keys(freets).length;
+          var row = null;
+          var html = document.getElementById("freetboard").innerHTML;
+          for(var i = 0; i < length ; i++){
+            row = freets[i];
+            html +="<option value="+row.freetboard_id+" >"+row.freetboard_name+" </option>";
+          }
+          document.getElementById("freetboard").innerHTML= html;
+        }
+
+        function setWoods(woods){
+          var length = Object.keys(woods).length;
+          var row = null;
+          var html = document.getElementById("wood").innerHTML;
+          for(var i = 0; i < length ; i++){
+            row = woods[i];
+            html +="<option value="+row.wood_id+" >"+row.wood_name+" </option>";
+          }
+          document.getElementById("wood").innerHTML = html;
+        }
+
+        function addSignature(){
+
+        }
     </script>
   </head>
-  <body>
+  <body onload="getSignatureParts()">
     <header>
         <a href="#"><img class="header_logo" src="../imgs/headerLogo.png" alt="Logo"></a>
         <ul class="header_menu">
           <li class="header_menuItem" onclick="logOut()">Salir</li>
-          <li class="header_menuItem" onclick="showSignaturesPreview();" style="cursor:pointer;">Signatures</li>
+          <li class="header_menuItem" style="cursor:pointer;"><a href="gallery.php">Signatures</a></li>
         </ul>
     </header>
     <section class="home_container">
@@ -67,7 +177,7 @@
           </div>
           <div class="home_form_field">
             <label for="kaoss">Kaoss Pad</label>
-            <select id="kaoss" name="kaoss"><option  id="kaoss_options" value=0>Selecciona un Kaoss Pad</option></select>
+            <select id="kaoss" name="kaoss"><option  id="kaoss_options" value=0>No</option><option value=1>Sí</option></select>
           </div>
 
           <div class="home_form_field">
@@ -76,7 +186,7 @@
           </div>
           <div class="home_form_field">
             <label for="sustainer">Sustainer</label>
-            <select id="sustainer" name="sustainer"><option id="sustainer_options" value=0>Selecciona un sustainer</option></select>
+            <select id="sustainer" name="sustainer"><option id="sustainer_options" value=0>No</option><option value=1>Sí</option></select>
           </div>
 
 
@@ -99,11 +209,11 @@
             <input type="text" id="model" name="model" placeholder="Escribe el nombre de la guitarra">
           </div>
 
-          <div class="home_form_field" style="width:70%;height:17%;">
+          <!--<div class="home_form_field" style="width:70%;height:17%;">
             <label  for="image">Imagen</label>
             <input type="file" id="image" name="image" style="width:100%;">
-          </div>
-          <button class="home_form_button" type="button">Agregar</button>
+          </div> -->
+          <button class="home_form_button" type="button" onclick="addSignature();" >Agregar</button>
         </div>
     </section>
   </body>

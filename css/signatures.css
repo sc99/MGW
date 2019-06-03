@@ -1,3 +1,14 @@
+.signature_table{
+  width:70%;
+  font-family: "Courgette";
+}
+.signature_table td {
+padding: 2%;
+padding-top: 5%;
+padding-bottom: 5%;
+}
+
+
 .signature_message{
   width:60%;
   height:20%;
@@ -6,6 +17,10 @@
   position: relative;
   left:20%;
   display:block;
+}
+
+.signature_button--delete{
+  background-color: red; 
 }
 
 .signature_message--hidden{

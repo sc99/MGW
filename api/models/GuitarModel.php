@@ -6,7 +6,7 @@ foreach (glob("../utils/catalogues/*.php") as $filename)
 require_once("../settings/AppCfg.php");
 require_once("../utils/DataBase.php");
 
-class GuitarModel{
+class GuitarModel  {
   private $id;
   private $model;
   private $price;
@@ -71,6 +71,107 @@ class GuitarModel{
   public function getWood(){return $this->wood;}
   public function getUrl(){return $this->url;}
 
+
+
+  private function fetchGuitarParts($db){
+    $bodyArray = array();
+    $bridgeArray = array();
+    $effectArray = array();
+    $freetboardArray = array();
+    $pickupsArray= array();
+    $stringsArray = array();
+    $woodsArray = array();
+    $db->query("select * from cat_bodies");
+    $resultSet = $db->resultSet();
+    foreach($resultSet as $body)
+      array_push($bodyArray,$body);
+    $db->clearFetch();
+
+    $db->query("select * from cat_bridges");
+    $resultSet = $db->resultSet();
+    foreach($resultSet as $bridge)
+      array_push($bridgeArray,$bridge);
+    $db->clearFetch();
+
+    $db->query("select * from cat_effects");
+    $resultSet = $db->resultSet();
+    foreach($resultSet as $effect)
+      array_push($effectArray,$effect);
+    $db->clearFetch();
+
+    $db->query("select * from cat_freetboards");
+    $resultSet = $db->resultSet();
+    foreach($resultSet as $freet)
+      array_push($freetboardArray,$freet);
+    $db->clearFetch();
+
+    $db->query("select * from cat_pickups");
+    $resultSet = $db->resultSet();
+    foreach($resultSet as $pickup)
+      array_push($pickupsArray,$pickup);
+    $db->clearFetch();
+
+    $db->query("select * from cat_strings");
+    $resultSet = $db->resultSet();
+    foreach($resultSet as $string)
+      array_push($stringsArray,$string);
+    $db->clearFetch();
+
+    $db->query("select * from cat_woods");
+    $resultSet = $db->resultSet();
+    foreach($resultSet as $wood)
+      array_push($woodsArray,$wood);
+    $db->clearFetch();
+
+    return json_encode(array(
+      "result" => 1,
+      "bodies" => $bodyArray,
+      "bridges" => $bridgeArray,
+      "effects" => $effectArray,
+      "freet" => $freetboardArray,
+      "picks" => $pickupsArray,
+      "strings" => $stringsArray,
+      "woods" => $woodsArray
+    ));
+  }
+
+  public function deleteGuitar($signatureId){
+    $dataBase = new DataBase();
+    $jsonResponse = null;
+
+    try{
+      if(!is_null($dataBase->getError()))
+        throw new DataBaseException($dataBase->error);
+      else{
+        $dataBase->query("call sp_delete_guitar(:guitar)");
+        $dataBase->bind(":guitar",$signatureId);
+        $row = $dataBase->single();
+        $jsonResponse = json_encode(array("result"=>$row['ERROR'],"message"=>$row['MESSAGE']));
+      }
+    }catch(DataBaseException $e){
+      $jsonResponse = json_encode(array("result" => 0, "message" =>$e->getMessage()));
+    }
+    $dataBase = null;
+    return $jsonResponse;
+  }
+
+  public function getGuitarParts(){
+    $dataBase = new DataBase();
+    $jsonResponse = null;
+
+    try{
+      if(!is_null($dataBase->getError()))
+        throw new DataBaseException($dataBase->error);
+      else{
+        $jsonResponse = $this->fetchGuitarParts($dataBase);
+      }
+    }catch(DataBaseException $e){
+      $jsonResponse = json_encode(array("result" => 0, "message" =>$e->getMessage()));
+    }
+    $dataBase = null;
+    return $jsonResponse;
+  }
+
   public function getAllGuitars(){
     $dataBase = new DataBase();
     $arrayGuitars = array();
@@ -80,7 +181,7 @@ class GuitarModel{
       else{
         $dataBase->query("select * from vw_guitars");
         $guitars = $dataBase->resultSet();
-        if(sizeof($guitars) > 0)
+        if(sizeof($guitars) > 0){
           foreach($guitars as $guitar){
               $guitar = self::basedOnParams(
                 $guitar['ID'],
@@ -97,11 +198,12 @@ class GuitarModel{
                 $guitar['WOOD'],
                 $guitar['IMAGE']
               );
-            array_push($arrayGuitars,$guitar);
+            array_push($arrayGuitars,$guitar->toJson());
           }
+        //  echo json_encode(array("Guitars"=>$arrayGuitars));
+        }
         else
           $arrayGuitars = null;
-
       }
     }catch(DataBaseException $e){
       throw new DataBaseException($e->getMessage());
@@ -132,6 +234,26 @@ class GuitarModel{
       throw new InvalidGuitarPartException($e->getMessage());
     }
   }
+
+
+public function toJson(){
+  $json = array(
+    "id"=>$this->id,
+    "model"=>$this->model,
+    "price"=>$this->price,
+    "kaoss"=>$this->kaoss,
+    "sustainer"=>$this->sustainer,
+    "body"=>$this->body,
+    "freetboard"=>$this->freetboard,
+    "bridge"=>$this->bridge,
+    "pickups"=>$this->pickups,
+    "strings"=>$this->strings,
+    "effect"=>$this->effect,
+    "wood"=>$this->wood,
+    "image"=>$this->url
+  );
+  return $json;
+}
 
 }
 

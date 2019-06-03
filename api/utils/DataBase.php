@@ -52,6 +52,10 @@ class DataBase{
     return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
+  public function clearFetch(){
+    $this->stmt->closeCursor();
+  }
+
   public function single(){
       $this->execute();
       return $this->stmt->fetch(PDO::FETCH_ASSOC);
