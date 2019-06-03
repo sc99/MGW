@@ -5,11 +5,12 @@
     <link rel="icon" href="../imgs/logoIcon.png" />
     <link rel="stylesheet" href="../css/master.css">
     <link rel="stylesheet" href="../css/login.css">
+    <script type="text/javascript" src="../js/Actions.js"></script>
     <script type="text/javascript">
 
         function submitUserLog(email,pswd){
           var ajax = new XMLHttpRequest();
-          var params = "usermail="+email+"&userpassword="+pswd;
+          var params = "action="+ACTIONS.LOGIN+"&usermail="+email+"&userpassword="+pswd;
           var response = null;
 
           ajax.open("POST","/CG/api/services/Logging.php",true);

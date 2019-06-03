@@ -5,9 +5,10 @@ class UserModel{
   private $userPswd;
   private $userId;
 
-  function __construct($userMail,$userPswd){
+  public function __construct($userMail,$userPswd){
     $this->userMail = $userMail;
     $this->userPswd = $userPswd;
+
   }
 
   public function logUser(){
@@ -18,10 +19,10 @@ class UserModel{
           throw new UserLoggingException($dataBase->error);
         else{
           $dataBase->query("call sp_log_user(:mail,:pswd)");
-          $dataBase->bind(':mail',$userMail);
-          $dataBase->bind(':pswd',$userPswd);
+          $dataBase->bind(':mail',$this->userMail);
+          $dataBase->bind(':pswd',$this->userPswd);
           $row = $dataBase->single();
-          $this->userId = $row['RESULT'] > 0 ? 1 : 0;
+          $this->userId = $row['RESULT'];
           $jsonResponse = json_encode(array("result" => $this->userId,"message"=> $row['MESSAGE']));
         }
       }catch(UserLoggingException $e){

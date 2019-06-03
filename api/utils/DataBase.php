@@ -62,4 +62,16 @@ class DataBase{
 
 }
 
+class DataBaseException extends Exception{
+  private $message;
+
+  public function __construct($message){
+    $this->message = $message;
+  }
+
+  public function errorMessage(){
+    return $this->message;
+  }
+}
+
  ?>
