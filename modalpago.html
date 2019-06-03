@@ -1,0 +1,45 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>.:modalordenrealizada :.</title>
+
+<link rel="stylesheet" href="css/modalpago.css">
+</head>
+<body>
+
+<h2>Ejemplo</h2>
+<button id="myBtn">ABRIR</button>
+<div id="orderContainer" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+	<center><h1 >Informacion de pago</h1></center>
+  <div><label>Nombre:</label><input type="text"name="nombre"id="nombre"></div>
+  <div><label>Apellido:</label><input type="text"name="Apellido"id="Apellido"></div>
+  <div><label>Alcaldia:</label><select name="Alcaldia"id="Alcaldia"></select></div>
+  <div><label>Calle:</label><input type="text"name="Calle"id="Calle"></div>
+  <div><label>Numero:</label><input type="text"name="Numero"id="Numero"></div>
+  <div><label>Codigo Postal:</label><input type="text"name="Postal"id="Postal"></div>
+  <div><label>Numero Tarjeta:</label><input type="text"name="Tarjeta"id="Tarjeta"></div>
+<br>
+		<center><button type="submit">Aceptar</button> </center>
+  </div>
+</div>
+
+<script>
+var modal = document.getElementById("myModal");
+var btn = document.getElementById("myBtn");
+var span = document.getElementsByClassName("close")[0];
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+span.onclick = function() {
+  modal.style.display = "none";
+}
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+</body>
+</html>

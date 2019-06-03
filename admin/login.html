@@ -6,8 +6,53 @@
     <link rel="stylesheet" href="../css/master.css">
     <link rel="stylesheet" href="../css/login.css">
     <script type="text/javascript">
+
+        function submitUserLog(email,pswd){
+          var ajax = new XMLHttpRequest();
+          var params = "usermail="+email+"&userpassword="+pswd;
+          var response = null;
+
+          ajax.open("POST","/CG/api/services/Logging.php",true);
+          ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+          ajax.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+              //console.log(ajax.responseText);
+              response = JSON.parse(ajax.responseText);
+              alert(response.message);
+              if(response.result > 0){//successful login
+                window.location = "home.php";
+              }
+            }
+          }
+          ajax.send(params);
+
+        }
+
         function logUser(){
-          window.location = "home.html";
+          //window.location = "home.html";
+          var userName = document.getElementById("usermail").value;
+          var userPass = document.getElementById("userpassword").value;
+
+          if(isValidField(userName,false))
+            if(isValidField(userPass,true)){
+                submitUserLog(userName,userPass);
+            }else
+              alert("La contraseña contiene caracteres no válidos");
+          else
+            alert("El correo no es válido ya que no cumple con la estructura: example00@mansonguitars.com");
+
+        }
+
+        function isValidField(field,isPassword){
+          var specialsExp = new RegExp("[^(0-9)(a-zA-Z)]");
+          var specialsMailExp = new RegExp("[^\d(a-zA-Z)@\.]");
+          var validEmail = new RegExp(".*.@mansonguitars\.com");
+          if(field == null || field == '' || field == ' ')
+            return false;
+          if(isPassword)
+            return specialsExp.exec(field) == null; //If null, is valid;
+          else
+            return specialsMailExp.exec(field) == null && validEmail.exec(field) != null;
         }
     </script>
   </head>
@@ -18,13 +63,13 @@
          <img class="login_logo" src="../imgs/headerLogo.png" alt="logo">
         </div>
         <div class="login_form">
-            <label for="username">Usuario</label>
+            <label for="username">Correo</label>
             <br><br>
-            <input class="login_input" type="text" name="username" placeholder="Ingresa tu usuario ">
+            <input class="login_input" type="text" name="usermail" id="usermail" placeholder="Ingresa tu email ">
             <br><br>
             <label for="userpassword">Contraseña</label>
             <br><br>
-            <input class="login_input"  type="text" name="userpassword" placeholder="Ingresa tu contraseña">
+            <input class="login_input"  type="password" name="userpassword" id="userpassword" placeholder="Ingresa tu contraseña">
             <br><br>
         </div>
         <br><br>

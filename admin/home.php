@@ -1,3 +1,10 @@
+<?php
+  session_start();
+  if(!isset($_SESSION['isLogged']) || !$_SESSION['isLogged'] ){
+    header("Location:login.html");
+    die();
+  }
+?>
 <html>
   <head>
     <meta charset="utf-8">

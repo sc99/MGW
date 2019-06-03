@@ -63,3 +63,10 @@ box-sizing: border-box;
   padding: 0;
   box-shadow: 4px 4px 5px black;
 }
+
+.modal-content input{
+  width: 40%;
+  height: 8%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}

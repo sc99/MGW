@@ -1,0 +1,58 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>.:modalordenrealizada :.</title>
+<link rel="stylesheet" href="css/master.css">
+<link rel="stylesheet" href="css/modalsig.css">
+</head>
+<body>
+
+<h2>Ejemplo</h2>
+<button id="myBtn">ABRIR</button>
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <center>
+  <div class="image"><br>
+  <div class="image2">
+  </div>
+  </div>
+<div class="pos">
+  <table border>
+
+      <tr><td class="tr" >Cuerpo</td><td class="td"></td></tr>
+      <tr><td class="tr">Mastil</td><td class="td"></td></tr>
+      <tr ><td class="tr">Mastil</td><td class="td"></td></tr>
+      <tr><td  class="tr" >Puente<td></td class="td"></tr>
+      <tr><td class="tr">Pastillas</td class="td"><td></td></tr>
+      <tr><td  class="tr">Cuerdas</td><td class="td"></td></tr>
+      <tr><td class="tr">Efecto</td><td class="td"></td></tr>
+      <tr><td class="tr">Sustainer</td class="td"><td></td></tr>
+      <tr><td class="tr">Color</td><td class="td"></td></tr>
+
+
+  </table>
+  </center>
+</div>
+<center><button class="lf">Ordenar</button></center>
+</div>
+</div>
+
+<script>
+var modal = document.getElementById("myModal");
+var btn = document.getElementById("myBtn");
+var span = document.getElementsByClassName("close")[0];
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+span.onclick = function() {
+  modal.style.display = "none";
+}
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+</body>
+</html>

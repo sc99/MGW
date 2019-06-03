@@ -1,0 +1,44 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>.:modalordenrealizada :.</title>
+
+<link rel="stylesheet" href="css/modalordenrealizada.css">
+</head>
+<body>
+
+<h2>Ejemplo</h2>
+<button id="myBtn">ABRIR</button>
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+		<center><h1 >Orden realizada con exito</h1>
+		<div ><img class="check1" src="imgs/check.png" alt="check"></div>
+    <p>Folio######</p>
+	<p>Conserve el archivo con el PDF de su orden para<br>futuras aclaraciones y verificaciones de compra</P><br>
+	<span class="close2">Aceptar</span> </center>
+  </div>
+</div>
+
+<script>
+var modal = document.getElementById("myModal");
+var btn = document.getElementById("myBtn");
+var span = document.getElementsByClassName("close")[0];
+var span2 = document.getElementsByClassName("close2")[0];
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+span.onclick = function() {
+  modal.style.display = "none";
+}
+span2.onclick = function() {
+  modal.style.display = "none";
+}
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+</body>
+</html>

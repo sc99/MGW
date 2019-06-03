@@ -1,9 +1,125 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Index</title>
-  </head>
-  <body>
+    <title>.:Index:.</title>
+    <link rel="icon" href="imgs/logoIcon.png" />
+    <link rel="stylesheet" href="css/master.css">
+    <link rel="stylesheet" href="css/index.css">
+    </head>
+    <body>
+      <header>
+        <a href="#"><img class="header_logo" src="imgs/headerLogo.png" alt="Logo"></a>
+        <ul class="header_menu">
+          <li class="header_menuItem" onclick="showSignaturesPreview();" style="cursor:pointer;"><a href="signatures.html">Signatures</a></li>
+        </ul>
+      </header>
+    <div class="hero-image">
+      <div class="hero-text">
+        <h1>Bienvenido a la mejor tienda de guitarras customizadas</h1>
+      </div>
+    </div>
 
-  </body>
+    <hr>
+    <center>
+    <div class="Descripcion">
+      <center>
+        <div>
+            <center>
+              <h1>¿Quiénes somos?
+                <hr>
+              </h1>
+                  </center>
+        </div>
+              <p style ="font-size:1.3vw;text-align:justify;padding:1%;">
+                  Somos una tienda de guitarras que ofrece modelos con características únicas
+                  no ofrecidas por las gamas y líneas de productos más comerciales de las marcas más importantes.
+                  Cada uno de los modelos ofertados es diseñado y construido con características especiales
+                  que son difíciles de encontrar en las gamas producidas a escala industrial.<br><br>
+                  Fabricadas con sumo detalle por nuestros <b>luthiers expertos</b>, si buscas un sonido
+                  único que refleje tu personalidad como guitarrista, nuestros instrumentos son lo que buscas.
+              </p>
+
+    </div>
+</center>
+  <h1 class="section_title">Features</h1>
+<section class="section_features">
+    <div class="feature_container">
+        <img src="imgs/feature_1.jpg" class="center feature_img feature_img--left" alt="Sustainer" >
+
+      <div class="center2">
+         <h2><center>Sustainer</center></h2>
+         <hr style="width:20%;">
+         <p class="feature_text">Consigue que tu sonido se apague en un tiempo mucho mayor.
+           Dale más expresividad a tus solos y amplia tu abanico de posibilidades aprovechando
+           la dinámica del instrumento al máximo.
+           Ofrecemos modelos equipados con sustainers de la mejor marca en el mercado: Fernandez Sustainers.
+           <br><br>
+           Sonido limpio y duradero sin perder claridad ni fuerza o cuerpo en el proceso.
+         </p>
+      </div>
+
+    </div>
+
+    <div class="feature_container">
+        <img src="imgs/feature_2.jpg" class="center feature_img feature_img--right" alt="Sustainer" >
+
+      <div class="center2">
+         <h2><center>Effecto embebido</center></h2>
+         <hr style="width:20%;">
+         <p class="feature_text">
+           Modelos con 1 efecto incluido dentro del circuito del cuerpo de la misma guitarra.
+           Evoluciona tu sonido y tus posibilidades dejando atrás los pedales tradicionales
+           y cambia el sonido de tu guitarra con tan sólo hacer click en un botón incrustado
+           cuidadosamente en el cuerpo de la guitarra para no arruinar su diseño.
+           <br><br>
+           Podrás generar cambios rápidos en tu sonido con tan sólo apretar un botón
+         </p>
+      </div>
+
+    </div>
+
+    <div class="feature_container">
+        <img src="imgs/feature_3.jpg" class="center feature_img feature_img--left" alt="Sustainer" >
+
+      <div class="center2">
+         <h2><center>Kaoss Pad</center></h2>
+         <hr style="width:20%;">
+         <p class="feature_text">
+           Consigue los más extraños y locos sonidos con nuestras guitarras equipadas con Kaoss Pad que te
+           permitirá, mediante la implementación de MIDI, producir sonidos increíbles que nadie creerá
+           que estás haciendo con tu guitarra.
+           <br><br>
+           Moderniza tu estilo y conoce de lo que son capaces nuestras guitarras con kaoss pad integrados.
+         </p>
+      </div>
+
+    </div>
+
+</section>
+    <h1 class="section_title">Contáctanos</h1>
+    <section class="section_contact">
+
+    <div class="contact_form">
+        <label for="sender_name">Remitente</label>
+        <br>
+        <input  type="text" name="sender_name" id="sender_name" placeholder="Dános tu nombre">
+        <br>
+        <br>
+        <label for="sender_mail">Email</label>
+        <br>
+        <input type="email" name="sender_mail" id="sender_mail" placeholder="Dános tu mail">
+        <br><br>
+        <textarea  name="Mensaje" placeholder="Envíanos tu comentario"></textarea><br>
+        <br><br>
+        <button onclick="submitMail();" >Enviar</button>
+    </div>
+    </section>
+    <footer>
+      <p>
+        Desarrollado por Castillo Ramírez Saúl y Rodríguez Ramos Duan.
+        <br>
+        Programación Web 3CM51
+      </p>
+    </footer>
+    </body>
 </html>
